@@ -68,7 +68,7 @@ const _EXAMDATA = {
 //   },
 // };
 // 헤더 스타일링
-
+innerContent = [];
 // pageHandler.elementMaker("div", "", "", "root");
 // tagName header로 하면 object형태로 나와서 style 찾기가 난해함
 const pageMaker = {
@@ -76,36 +76,26 @@ const pageMaker = {
   innerContent: ["하"],
   Value: ["id"],
   valueName: ["header", "main", "footer"],
-  // 헤더
-  header: function () {
-    let element = document.createElement(this.tagName[0]);
-    element.textContent = this.innerContent[0];
-    element.setAttribute(this.Value[0], this.valueName[0]);
-    root.appendChild(element);
+  parent: [root],
+  // 헤더, 메인, 푸터
+  bodyWrap: function () {
+    for (let i = 0; i < pageMaker.valueName.length; i++) {
+      let element = document.createElement(this.valueName[i]);
+      // element.textContent = this.innerContent[0];
+      // element.setAttribute(this.Value[0], this.valueName[0]);
+      this.parent[0].appendChild(element);
+    }
   },
-  // 메인
-  main: function () {
-    let element = document.createElement(this.tagName[0]);
-    element.textContent = this.innerContent[0];
-    element.setAttribute(this.Value[0], this.valueName[1]);
-    root.appendChild(element);
-  },
-  // 푸터
-  footer: function () {
-    let element = document.createElement(this.tagName[0]);
-    element.textContent = this.innerContent[0];
-    element.setAttribute(this.Value[0], this.valueName[2]);
-    root.appendChild(element);
-  },
+
   // styler: function (StyleObject) {
   //   for (let i = 0; i < styleBox.length; i++) {
   //     this.StyleObject.style[styleBox[i]] = styleSelect[i];
   //   }
   // },
 };
-pageMaker.header();
-pageMaker.main();
-pageMaker.footer();
+// 생성
+pageMaker.bodyWrap();
+
 // pageMaker.styler("root");
 
 // root.style[styleBox[0]] = styleSelect[0];
@@ -122,14 +112,14 @@ pageMaker.footer();
 
 const header = document.getElementById("header");
 // console.dir(header);
-header.style.width = "100px";
+// header.style.width = "100px";
 
-const styleBox = ["width", "height", "backgroundColor"];
-const styleSelect = ["100vw", "100vh", "green"];
 // headerStyling();
 function elementStyling(StyleObject) {
-  for (let i = 0; i < styleBox.length; i++) {
-    StyleObject.style[styleBox[i]] = styleSelect[i];
+  for (let i = 0; i < styleSelect.length; i++) {
+    StyleObject.style[styleSelect[i]] = styleValue[i];
   }
 }
+const styleSelect = ["width", "height", "backgroundColor"];
+const styleValue = ["100vw", "100vh", "green"];
 elementStyling(root);
