@@ -1,3 +1,5 @@
+const root = document.getElementById("root");
+
 const _EXAMDATA = {
   teamInformation: {
     teamNumber: 5,
@@ -56,3 +58,33 @@ const _EXAMDATA = {
     breakPoint: ["768px", "1280px", "1920px"],
   },
 };
+
+// const pageMaker = {
+//   elMaker: function (tagName, Value, valueName, content, parent) {
+//     let element = document.createElement(tagName);
+//     element.setAttribute(Value, valueName );
+//     element.textContent = content;
+//     parent.appendChild(element);
+//   },
+// };
+
+// pageHandler.elementMaker("div", "", "", "root");
+// this안써서 애들이 위치를 못찾았던 것 같다
+const pageMaker = {
+  maker: function (tagName, innerContent, Value, valueName) {
+    let element = document.createElement(tagName);
+    element.textContent = innerContent;
+    element.setAttribute(Value, valueName);
+    root.appendChild(element);
+  },
+};
+// 헤더
+pageMaker.maker("header", "1", "id", "");
+// 메인
+pageMaker.maker("main", "", "id", "");
+// 푸터
+pageMaker.maker("footer", "", "id", "");
+
+// 헤더 스타일링
+const header = document.getElementsByTagName("hedaer");
+console.log(header);
