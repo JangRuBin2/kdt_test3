@@ -1,5 +1,4 @@
 const root = document.getElementById("root");
-const header = root.children["header"];
 // const main = root.children["main"];
 // const footer = root.children["footer"];
 const _EXAMDATA = {
@@ -75,19 +74,19 @@ const _EXAMDATA = {
 // tagName header로 하면 object형태로 나와서 style 찾기가 난해함
 
 const pageMaker = {
-  tagName: ["div"],
-  innerContent: ["생성"],
-  Value: ["id", "class"],
-  valueName: ["header", "main", "footer"],
+  // tagName: ["div"],
+  // innerContent: ["생성"],
+  // Value: ["id", "class"],
+  section: ["header", "main", "footer"],
   parent: [root],
 
   // 헤더, 메인, 푸터
   bodyWrap: function () {
-    for (let i = 0; i < pageMaker.valueName.length; i++) {
-      let element = document.createElement(this.valueName[i]);
+    for (let i = 0; i < pageMaker.section.length; i++) {
+      let ele = document.createElement(this.section[i]);
       // element.textContent = this.innerContent[0];
       // element.setAttribute(this.Value[0], this.valueName[0]);
-      this.parent[0].appendChild(element);
+      this.parent[0].appendChild(ele);
     }
   },
   // teamInfo: function () {
@@ -104,28 +103,48 @@ const pageMaker = {
   //   // console.log("hi");
   // },
   // 디비전 생성 -> where에 어디의 자식으로 할건지 경로지정, a에 몇개 만들건지 씀
-  div: function (where, a, textWhat) {
-    for (let i = 0; i < a; i++) {
-      let ele = document.createElement("div");
-      // 사진이나 텍스트
-      // ele.setAttribute(this.Value[1], className);
-      ele.innerHTML = textWhat;
-      // 원하는 위치에 요소 생성
-      where.appendChild(ele);
-    }
-  },
   // 클래스 적용하고 내용 설정 가능
-
+  // commonStyler: function (comsty, choiceStyle) {
+  //   for (let i = 0; i < this.StyleSelect.length; i++) {
+  //     comsty.style[this.StyleSelect[i]] = choiceStyle[i];
+  //   }
+  // },
   // 출력해야 할 개인 내용이 깃허브주소, 넘버, 이름, 포지션,
-  innerDiv: function (innerWhere, s, setText) {
-    for (let i = 0; i < s; i++) {
-      let innerEle = document.createElement("div");
-      innerEle.setAttribute("class", [i] + "class");
-      innerEle.innerHTML = setText;
-      innerWhere.appendChild(innerEle);
+  // innerDiv: function (innerWhere, s, setText) {
+  //   for (let i = 0; i < s; i++) {
+  //     let innerEle = document.createElement();
+  //     innerEle.setAttribute("class", [i] + "class");
+  //     innerEle.innerHTML = setText;
+  //     innerWhere.appendChild(innerEle);
+  //   }
+  // },
+  tag: function (tagName, textWhat, where, a) {
+    for (let i = 0; i < a; i++) {
+      let element = document.createElement(tagName);
+      // 사진이나 텍스트
+      // element.setAttribute(tagValue, valName);
+      element.innerHTML = textWhat;
+      // 원하는 위치에 요소 생성
+      where.appendChild(element);
     }
   },
 };
+pageMaker.bodyWrap();
+// setAttribute는 값을 안 넣으면 에러가 나오넹?
+const header = root.children[0];
+const main = root.children[1];
+const footer = root.children[2];
+// console.log(main);
+// 헤더 디비전 두개 생성
+pageMaker.tag("img", "src=./newDevs.png", header, 1);
+pageMaker.tag("div", "1", header, 1);
+
+header.children[0] = pageMaker.tag("div", "메인입니데이", main, 3);
+
+pageMaker.tag("div", "푸터입니데이", footer, 1);
+
+// pageMaker.tag(root.children[0], 2, "두개", "div", "", "");
+// pageMaker.div("root", "3", "");
 
 // styler: function (StyleObject) {
 //   for (let i = 0; i < styleBox.length; i++) {
@@ -137,47 +156,47 @@ const pageMaker = {
 // pageMaker.createDiv(5);
 
 // 헤더 메인 푸터 생성
-pageMaker.bodyWrap();
+
 // header에 팀 네임>로고 생성
-pageMaker.div(root.children[0], 1, _EXAMDATA["teamInformation"].teamName);
+// pageMaker.div(root.children[0], 1, _EXAMDATA["teamInformation"].teamName);
 
 // pageMaker.div()
 // pageMaker.styler("root");
 // 헤더 자식으로 div 1개 생성
 // pageMaker.teamInfo(1);
 
-// 메인
-pageMaker.div(
-  // 위치
-  root.children[1],
-  // 몇개 만들지
-  _EXAMDATA.teamInformation.teamAllMember.length,
-  // 들어갈 텍스트 요소
-  "팀 인원수만큼 디비전 생성"
-);
-// const teamInfoHeader = root.children[1].querySelector();
-console.log(root.children[1]);
-// pageMaker.div(roo)
-// n번째 main div 접근
+// // 메인
+// pageMaker.div(
+//   // 위치
+//   root.children[1],
+//   // 몇개 만들지
+//   _EXAMDATA.teamInformation.teamAllMember.length,
+//   // 들어갈 텍스트 요소
+//   "팀 인원수만큼 디비전 생성"
+// );
+// // const teamInfoHeader = root.children[1].querySelector();
+// console.log(root.children[1]);
+// // pageMaker.div(roo)
+// // n번째 main div 접근
 
-// 팀원의 개인정보
-console.log(_EXAMDATA.teamInformation.teamAllMember[0]);
+// // 팀원의 개인정보
+// console.log(_EXAMDATA.teamInformation.teamAllMember[0]);
 
-for (let i = 0; i < _EXAMDATA.teamInformation.teamAllMember.length; i++) {
-  pageMaker.innerDiv(
-    root.children[1].children[i],
-    4,
-    // 팀원 개인의 깃허브 주소
-    _EXAMDATA.teamInformation.teamAllMember[i].githubAddress
-  );
-}
+// for (let i = 0; i < _EXAMDATA.teamInformation.teamAllMember.length; i++) {
+//   pageMaker.innerDiv(
+//     root.children[1].children[i],
+//     4,
+//     // 팀원 개인의 깃허브 주소
+//     _EXAMDATA.teamInformation.teamAllMember[i].githubAddress
+//   );
+// }
 
-// 푸터
-pageMaker.div(root.children[2], 1);
+// // 푸터
+// pageMaker.div(root.children[2], 1);
 
-function teamIntro() {
-  for (let i = 0; i < a; i++) {}
-}
+// function teamIntro() {
+//   for (let i = 0; i < a; i++) {}
+// }
 // const teamIntroduce = document.createElement("div");
 // teamIntroduce.textContent = _EXAMDATA["teamInformation"].teamName;
 // root.children[0].appendChild(teamIntroduce);
@@ -230,8 +249,8 @@ console.dir(_EXAMDATA["teamInformation"].teamAllMember[0].teamPosition);
 
 const styleBox = {
   // 각 스타일 적용할 위치
-  styleWhere: [root, root.children[0]],
-  // 스타일 요소들
+  // styleWhere: [root, root.children[0]],
+  // 스타일 요소들(고정)
   StyleSelect: [
     // size
     "margin",
@@ -249,10 +268,59 @@ const styleBox = {
     "alignItems",
   ],
   // 스타일 적용할 변수 선언하고 데이터 넣어주면 됨
-  rootStyleValue: ["0", "100vw", "100vh", "green", "yellow"],
-  headerStyleValue: ["0", "100vw", "10vh", "pink"],
-  mainStyleValue: ["0", "100vw", "70vh", "yellow"],
-  footerStyleValue: ["0", "100vw", "20vh", "black"],
+  rootStyleValue: [
+    "0",
+    "100vw",
+    "100vh",
+    "green",
+    "yellow",
+    "",
+    "",
+    "",
+    "flex",
+    "column",
+  ],
+  headerStyleValue: [
+    "0",
+    "100%",
+    "10vh",
+    "",
+    "",
+    "",
+    "",
+    "flex",
+    "row",
+    "center",
+    "center",
+  ],
+  mainStyleValue: [
+    "0",
+    "100%",
+    "70vh",
+    "yellow",
+    "",
+    "",
+    "",
+    "",
+    "flex",
+    "row",
+    "center",
+    "center",
+  ],
+  footerStyleValue: [
+    "0",
+    "100%",
+    "20vh",
+    "black",
+    "",
+    "",
+    "",
+    "",
+    "flex",
+    "row",
+    "center",
+    "center",
+  ],
   InfoBoxStyleValue: [
     "0",
     "300px",
@@ -268,31 +336,38 @@ const styleBox = {
   ],
   // #root 스타일
 
-  rootStyler: function () {
-    for (let i = 0; i < this.StyleSelect.length; i++) {
-      this.styleWhere[0].style[this.StyleSelect[i]] = this.rootStyleValue[i];
-    }
-  },
-  // 헤더 스타일
-  headerStyler: function () {
-    for (let i = 0; i < this.StyleSelect.length; i++) {
-      this.styleWhere[1].style[this.StyleSelect[i]] = [
-        this.headerStyleValue[i],
-      ];
-    }
-  },
+  // rootStyler: function () {
+  //   for (let i = 0; i < this.StyleSelect.length; i++) {
+  //     this.styleWhere[0].style[this.StyleSelect[i]] = this.rootStyleValue[i];
+  //   }
+  // },
+  // // 헤더 스타일
+  // headerStyler: function () {
+  //   for (let i = 0; i < this.StyleSelect.length; i++) {
+  //     this.styleWhere[1].style[this.StyleSelect[i]] = [
+  //       this.headerStyleValue[i],
+  //     ];
+  //   }
+  // },
   // 외부에서 핸들링해야하는 -> 값이 자주 바뀌는 친구들은 매개변수로 써주는게 좋고 , 우리가 계속 사용할 -> 바뀌지 않을 애들을 함수로 쓰는게 맞다 ㅜㅠㅜ
-  commonStyler: function (comsty, choiceStyle) {
+
+  // 스타일 적용할 요소 -> comsty
+  // styleSelect[i]은 고정(value 값), 매개변수로 함수에서 대입choiceStyle[i]
+  commonStyler: function (styObj, choiceStyle) {
     for (let i = 0; i < this.StyleSelect.length; i++) {
-      comsty.style[this.StyleSelect[i]] = choiceStyle[i];
+      styObj.style[this.StyleSelect[i]] = choiceStyle[i];
     }
   },
 };
 
 // console.log(root.children[0].style["width"]);
-styleBox.rootStyler();
+// styleBox.rootStyler();
 console.log(root.children[0]);
-styleBox.headerStyler();
+// styleBox.headerStyler();
 // 팀 개인 소개 창
-console.log(root.children[1].children);
-styleBox.commonStyler(root.children[1], styleBox.InfoBoxStyleValue);
+// console.log(root.children[1].children);
+
+styleBox.commonStyler(root, styleBox.rootStyleValue);
+styleBox.commonStyler(root.children[0], styleBox.headerStyleValue);
+styleBox.commonStyler(root.children[1], styleBox.mainStyleValue);
+styleBox.commonStyler(root.children[2], styleBox.footerStyleValue);
